@@ -177,7 +177,48 @@ const schema1 = {
 当前库内置的自定义规则：
 
 |规则字符串|释义|
-|:----:|:----:|
+|:----:|----|
 |numStr|数字字符串，比如id值|
 |boolStr|true/false/True/False字符串|
 
+### 自定义Schema属性
+
+什么是自定义属性，参见[jsonschema文档](https://github.com/tdegrunt/jsonschema#custom-keywords)
+
+举例：
+
+```js
+const validator = createValidator(ruleConfig)
+
+const oneOf = (instance, schema, options, ctx) => {
+  if (!Array.isArray(schema.oneOf)) {
+    console.error('jsonschema attribute oneOf expect an array!', schema)
+    return
+  } else {
+    // 校验通过
+    if (schema.oneOf.includes(instance)) return
+    // 否则，返回错误信息
+    return `should be one of ${schema.oneOf}, but got ${instance}`
+  }
+}
+
+validator.addCustomAttribute('oneOf', oneOf)
+
+const schema1 = {
+  type: "object",
+  properties: {
+    // p1参数校验使用了oneOf参数，表明p1参数必须是a b c其中之一
+    p1: { type: "string",  oneOf: ['a', 'b', 'c'] },
+  },
+  required: ["p1"]
+}
+
+// 校验错误，因为d不是oneOf数组项
+validator.validate('from/url', 'to/url', { p1: 'd' })
+```
+当前库内置的自定义属性：
+
+|属性|释义|
+|:----:|----|
+|is|全等对比，全等则通过，否则不通过|
+|oneOf|接收数组，被校验参数应该是数组的元素，否则校验失败|

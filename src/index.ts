@@ -81,3 +81,4 @@ export function createValidator(rules) {
 }
 
 export const customFormats: CustomFormats = Object.keys(formats).reduce((pre, cur) => ({...pre, [cur]: cur}), {}) as CustomFormats
+export * from './tools'
