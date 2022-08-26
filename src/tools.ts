@@ -1,5 +1,3 @@
-
-
 interface PropShape {
   name: string;
   type?: string;
@@ -11,8 +9,10 @@ interface PropShape {
 }
 
 export function createSchemaWithProperties(propList: PropShape[]) {
-  let propSchema = {}, requireSchema = []
+  let propSchema = {}
+  const requireSchema = []
   propList.forEach((item) => {
+    // eslint-disable-next-line
     const { name, required = false, ...rest } = item
     propSchema = {
       ...propSchema,

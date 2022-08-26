@@ -1,12 +1,12 @@
 
-export const is = (instance, schema, options, ctx) => {
+export const is = (instance, schema) => {
   if (instance === schema.is) {
     return
   }
   return `should be equal to ${schema.is}, but got ${instance}`
 }
 
-export const oneOf = (instance, schema, options, ctx) => {
+export const oneOf = (instance, schema) => {
   if (!Array.isArray(schema.oneOf)) {
     console.error('jsonschema attribute oneOf expect an array!', schema)
     return

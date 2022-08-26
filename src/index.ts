@@ -18,7 +18,7 @@ type ValidateRes = ValidateErrorRes | null
 
 type CustomFormats = { [k in keyof typeof formats]: string }
 
-var Validator = jsonschema.Validator;
+const Validator = jsonschema.Validator;
 var v = new Validator();
 
 // 注册规则函数
